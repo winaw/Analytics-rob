@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Analytics ROB | Oct-Nov 2026</title>
+  <script>
+    (() => {
+      const param = new URLSearchParams(window.location.search).get("scoutTheme");
+      const theme =
+        param || (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+      document.documentElement.setAttribute("data-theme", theme);
+    })();
+  </script>
+  <style>
+:root {
+  color-scheme: light;
+  --cp-bg: #f7f4ef;
+  --cp-bg-elevated: #fcfbf8;
+  --cp-surface: #ffffff;
+  --cp-surface-soft: #f5f5f5;
+  --cp-border: #dedede;
+  --cp-border-strong: #919191;
+  --cp-text: #242424;
+  --cp-text-muted: #5c5c5c;
+  --cp-text-soft: #6f6f6f;
+  --cp-accent: #b11f4b;
+  --cp-accent-hover: #9a1a41;
+  --cp-accent-soft: rgba(177, 31, 75, 0.08);
+  --cp-accent-fg: #ffffff;
+  --cp-success: #16a34a;
+  --cp-danger: #dc2626;
+  --cp-warning: #f59e0b;
+  --cp-link: #0078d4;
+  --cp-shadow: 0 18px 48px rgba(0, 0, 0, 0.12);
+  --cp-overlay: rgba(255, 255, 255, 0.8);
+  --cp-panel: rgba(255, 255, 255, 0.86);
+  --cp-panel-strong: rgba(255, 255, 255, 0.96);
+  --cp-sheen: rgba(255, 255, 255, 0.55);
+  --cp-highlight: rgba(177, 31, 75, 0.12);
+}
+html[data-theme="dark"] {
+  color-scheme: dark;
+  --cp-bg: #3d3b3a;
+  --cp-bg-elevated: #343231;
+  --cp-surface: #292929;
+  --cp-surface-soft: #2e2e2e;
+  --cp-border: #474747;
+  --cp-border-strong: #5f5f5f;
+  --cp-text: #dedede;
+  --cp-text-muted: #919191;
+  --cp-text-soft: #b0b0b0;
+  --cp-accent: #fd8ea1;
+  --cp-accent-hover: #fb7b91;
+  --cp-accent-soft: rgba(253, 142, 161, 0.14);
+  --cp-accent-fg: #1a1a1a;
+  --cp-success: #4ade80;
+  --cp-danger: #f87171;
+  --cp-warning: #fbbf24;
+  --cp-link: #4da6ff;
+  --cp-shadow: 0 18px 48px rgba(0, 0, 0, 0.32);
+  --cp-overlay: rgba(41, 41, 41, 0.88);
+  --cp-panel: rgba(41, 41, 41, 0.72);
+  --cp-panel-strong: rgba(41, 41, 41, 0.96);
+  --cp-sheen: rgba(255, 255, 255, 0.04);
+  --cp-highlight: rgba(253, 142, 161, 0.12);
+}
+* { box-sizing: border-box; }
+body { margin: 0; font-family: "Segoe UI", Aptos, Calibri, -apple-system, BlinkMacSystemFont, sans-serif; background: var(--cp-bg); color: var(--cp-text); }
+.page { min-height: 100vh; padding: 32px; }
+.shell { max-width: 1200px; margin: 0 auto; background: var(--cp-surface); border: 1px solid var(--cp-border); border-radius: 16px; box-shadow: 0 0 2px var(--cp-border), 0 1px 2px var(--cp-border); overflow: hidden; }
+.header { padding: 28px 32px 20px; border-bottom: 1px solid var(--cp-border); background: var(--cp-panel-strong); }
+.eyebrow { margin: 0 0 8px; font-size: 12px; letter-spacing: .12em; text-transform: uppercase; font-weight: 700; color: var(--cp-accent); }
+h1 { margin: 0; font-size: clamp(28px, 4vw, 44px); line-height: 1.05; }
+.subtitle { margin: 12px 0 0; color: var(--cp-text-muted); max-width: 820px; }
+.legend { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 20px; }
+.pill { border: 1px solid var(--cp-border); border-radius: 0.625rem; padding: 6px 10px; font-size: 12px; font-weight: 700; background: var(--cp-surface-soft); color: var(--cp-text); }
+.content { padding: 28px 32px 34px; display: grid; gap: 24px; }
+.top-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+.card { border: 1px solid var(--cp-border); border-radius: 16px; background: var(--cp-surface); padding: 20px; box-shadow: 0 0 2px var(--cp-border), 0 1px 2px var(--cp-border); }
+h2 { margin: 0 0 14px; font-size: 20px; }
+table { width: 100%; border-collapse: collapse; font-size: 13px; }
+th { text-align: left; color: var(--cp-accent-fg); background: var(--cp-accent); padding: 9px; border: 1px solid var(--cp-border); }
+td { padding: 9px; border: 1px solid var(--cp-border); vertical-align: top; }
+.months { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+.month h2 { color: var(--cp-link); }
+.calendar { display: grid; grid-template-columns: repeat(5, 1fr); border: 1px solid var(--cp-border); }
+.day-head { padding: 8px; font-size: 12px; font-weight: 800; text-align: center; background: var(--cp-surface-soft); border: 1px solid var(--cp-border); }
+.day { min-height: 112px; padding: 8px; border: 1px solid var(--cp-border); background: var(--cp-surface); }
+.date { font-weight: 800; color: var(--cp-text); margin-bottom: 6px; }
+.event { display: block; margin-top: 4px; font-size: 12px; line-height: 1.25; color: var(--cp-text-muted); }
+.tag { font-weight: 800; color: var(--cp-accent); }
+.note { border-left: 4px solid var(--cp-accent); background: var(--cp-accent-soft); padding: 14px 16px; border-radius: 0.625rem; color: var(--cp-text); }
+.rhythm { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+.rhythm-item { border: 1px solid var(--cp-border); border-radius: 0.625rem; padding: 14px; background: var(--cp-surface-soft); }
+.rhythm-item strong { color: var(--cp-accent); display: block; margin-bottom: 6px; }
+@media (max-width: 900px) { .top-grid, .months, .rhythm { grid-template-columns: 1fr; } .page { padding: 16px; } .content, .header { padding-left: 20px; padding-right: 20px; } }
+  </style>
+</head>
+<body>
+  <main class="page"><section class="shell"><header class="header"><p class="eyebrow">Analytics ROB</p><h1>October-November 2026 Operating Rhythm</h1><p class="subtitle">Two-week sprint cadence with Wednesday request governance, every-other-Tuesday CX alignment, Thursday sprint planning, and Friday scoped delivery visibility.</p><div class="legend" aria-label="workstream legend"><span class="pill">CX alignment</span><span class="pill">Triage and approvals</span><span class="pill">Sprint planning</span><span class="pill">Scoped delivery</span><span class="pill">Sprint execution</span></div></header><div class="content"><section class="top-grid"><article class="card"><h2>Sprint schedule</h2><table><thead><tr><th>Sprint</th><th>Execution window</th><th>Planning</th><th>Scope share</th></tr></thead><tbody><tr><td>Sprint 1</td><td>Sep 28-Oct 9</td><td>Sep 24</td><td>Sep 25</td></tr><tr><td>Sprint 2</td><td>Oct 12-Oct 23</td><td>Oct 8</td><td>Oct 9</td></tr><tr><td>Sprint 3</td><td>Oct 26-Nov 6</td><td>Oct 22</td><td>Oct 23</td></tr><tr><td>Sprint 4</td><td>Nov 9-Nov 20</td><td>Nov 5</td><td>Nov 6</td></tr><tr><td>Sprint 5</td><td>Nov 23-Dec 4</td><td>Nov 19</td><td>Nov 20</td></tr></tbody></table></article><article class="card"><h2>Operating rhythm</h2><div class="rhythm"><div class="rhythm-item"><strong>Every Wednesday</strong>Triage, prioritize, and approve analytics requests.</div><div class="rhythm-item"><strong>Every other Tuesday</strong>Connect with Trishala from CX to compare notes.</div><div class="rhythm-item"><strong>Every other Thursday</strong>Run sprint planning for the next two-week cycle.</div><div class="rhythm-item"><strong>Every other Friday</strong>Share what is scoped for delivery.</div></div></article></section><section class="months"><article class="card month"><h2>October ROB</h2><div class="calendar"><div class="day-head">MON</div><div class="day-head">TUE</div><div class="day-head">WED</div><div class="day-head">THU</div><div class="day-head">FRI</div><div class="day"></div><div class="day"></div><div class="day"></div><div class="day"><div class="date">1</div></div><div class="day"><div class="date">2</div></div><div class="day"><div class="date">5</div></div><div class="day"><div class="date">6</div><span class="event"><span class="tag">CX</span> Trishala sync</span></div><div class="day"><div class="date">7</div><span class="event"><span class="tag">WED</span> Triage + approve</span></div><div class="day"><div class="date">8</div><span class="event"><span class="tag">PLAN</span> Sprint planning</span></div><div class="day"><div class="date">9</div><span class="event"><span class="tag">SCOPE</span> Delivery share</span><span class="event">Sprint 1 ends</span></div><div class="day"><div class="date">12</div><span class="event">Sprint 2 starts</span></div><div class="day"><div class="date">13</div></div><div class="day"><div class="date">14</div><span class="event"><span class="tag">WED</span> Triage + approve</span></div><div class="day"><div class="date">15</div></div><div class="day"><div class="date">16</div></div><div class="day"><div class="date">19</div></div><div class="day"><div class="date">20</div><span class="event"><span class="tag">CX</span> Trishala sync</span></div><div class="day"><div class="date">21</div><span class="event"><span class="tag">WED</span> Triage + approve</span></div><div class="day"><div class="date">22</div><span class="event"><span class="tag">PLAN</span> Sprint planning</span></div><div class="day"><div class="date">23</div><span class="event"><span class="tag">SCOPE</span> Delivery share</span><span class="event">Sprint 2 ends</span></div><div class="day"><div class="date">26</div><span class="event">Sprint 3 starts</span></div><div class="day"><div class="date">27</div></div><div class="day"><div class="date">28</div><span class="event"><span class="tag">WED</span> Triage + approve</span></div><div class="day"><div class="date">29</div></div><div class="day"><div class="date">30</div></div></div></article><article class="card month"><h2>November ROB</h2><div class="calendar"><div class="day-head">MON</div><div class="day-head">TUE</div><div class="day-head">WED</div><div class="day-head">THU</div><div class="day-head">FRI</div><div class="day"><div class="date">2</div></div><div class="day"><div class="date">3</div><span class="event"><span class="tag">CX</span> Trishala sync</span></div><div class="day"><div class="date">4</div><span class="event"><span class="tag">WED</span> Triage + approve</span></div><div class="day"><div class="date">5</div><span class="event"><span class="tag">PLAN</span> Sprint planning</span></div><div class="day"><div class="date">6</div><span class="event"><span class="tag">SCOPE</span> Delivery share</span><span class="event">Sprint 3 ends</span></div><div class="day"><div class="date">9</div><span class="event">Sprint 4 starts</span></div><div class="day"><div class="date">10</div></div><div class="day"><div class="date">11</div><span class="event"><span class="tag">WED</span> Triage + approve*</span></div><div class="day"><div class="date">12</div></div><div class="day"><div class="date">13</div></div><div class="day"><div class="date">16</div></div><div class="day"><div class="date">17</div><span class="event"><span class="tag">CX</span> Trishala sync</span></div><div class="day"><div class="date">18</div><span class="event"><span class="tag">WED</span> Triage + approve</span></div><div class="day"><div class="date">19</div><span class="event"><span class="tag">PLAN</span> Sprint planning</span></div><div class="day"><div class="date">20</div><span class="event"><span class="tag">SCOPE</span> Delivery share</span><span class="event">Sprint 4 ends</span></div><div class="day"><div class="date">23</div><span class="event">Sprint 5 starts</span></div><div class="day"><div class="date">24</div></div><div class="day"><div class="date">25</div><span class="event"><span class="tag">WED</span> Triage + approve*</span></div><div class="day"><div class="date">26</div></div><div class="day"><div class="date">27</div></div></div></article></section><p class="note">* Holiday proximity: confirm whether Nov 11 and Nov 25 governance sessions need adjustment. Assumption: CX alignment occurs on the Tuesday of sprint-planning week.</p></div></section></main>
+</body>
+</html>
