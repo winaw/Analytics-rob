@@ -574,13 +574,13 @@ function buildGovernanceTable(wednesdays, sprints) {
         <tr>
           <td>CX alignment</td>
           <td>${escapeHtml(formatDate(sprint.cx))}</td>
-          <td>Connect with Trishala from CX before sprint planning.</td>
+          <td>P&I Connect with Trishala from CX before sprint planning.</td>
         </tr>`).join("");
   const wedRows = wednesdays.map((date) => `
         <tr>
           <td>Request governance</td>
           <td>${escapeHtml(formatDate(date))}</td>
-          <td>Triage, prioritize, and approve analytics requests.</td>
+          <td>P&I Triage, prioritize, and approve analytics requests.</td>
         </tr>`).join("");
 
   return `<table>
