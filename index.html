@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Analytics ROB | Oct-Nov 2026</title>
+  <title>Analytics ROB Next Month Schedule Generator</title>
   <script>
     (() => {
       const param = new URLSearchParams(window.location.search).get("scoutTheme");
@@ -65,39 +65,612 @@ html[data-theme="dark"] {
   --cp-sheen: rgba(255, 255, 255, 0.04);
   --cp-highlight: rgba(253, 142, 161, 0.12);
 }
-* { box-sizing: border-box; }
-body { margin: 0; font-family: "Segoe UI", Aptos, Calibri, -apple-system, BlinkMacSystemFont, sans-serif; background: var(--cp-bg); color: var(--cp-text); }
-.page { min-height: 100vh; padding: 32px; }
-.shell { max-width: 1200px; margin: 0 auto; background: var(--cp-surface); border: 1px solid var(--cp-border); border-radius: 16px; box-shadow: 0 0 2px var(--cp-border), 0 1px 2px var(--cp-border); overflow: hidden; }
-.header { padding: 28px 32px 20px; border-bottom: 1px solid var(--cp-border); background: var(--cp-panel-strong); }
-.eyebrow { margin: 0 0 8px; font-size: 12px; letter-spacing: .12em; text-transform: uppercase; font-weight: 700; color: var(--cp-accent); }
-h1 { margin: 0; font-size: clamp(28px, 4vw, 44px); line-height: 1.05; }
-.subtitle { margin: 12px 0 0; color: var(--cp-text-muted); max-width: 820px; }
-.legend { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 20px; }
-.pill { border: 1px solid var(--cp-border); border-radius: 0.625rem; padding: 6px 10px; font-size: 12px; font-weight: 700; background: var(--cp-surface-soft); color: var(--cp-text); }
-.content { padding: 28px 32px 34px; display: grid; gap: 24px; }
-.top-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
-.card { border: 1px solid var(--cp-border); border-radius: 16px; background: var(--cp-surface); padding: 20px; box-shadow: 0 0 2px var(--cp-border), 0 1px 2px var(--cp-border); }
-h2 { margin: 0 0 14px; font-size: 20px; }
-table { width: 100%; border-collapse: collapse; font-size: 13px; }
-th { text-align: left; color: var(--cp-accent-fg); background: var(--cp-accent); padding: 9px; border: 1px solid var(--cp-border); }
-td { padding: 9px; border: 1px solid var(--cp-border); vertical-align: top; }
-.months { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
-.month h2 { color: var(--cp-link); }
-.calendar { display: grid; grid-template-columns: repeat(5, 1fr); border: 1px solid var(--cp-border); }
-.day-head { padding: 8px; font-size: 12px; font-weight: 800; text-align: center; background: var(--cp-surface-soft); border: 1px solid var(--cp-border); }
-.day { min-height: 112px; padding: 8px; border: 1px solid var(--cp-border); background: var(--cp-surface); }
-.date { font-weight: 800; color: var(--cp-text); margin-bottom: 6px; }
-.event { display: block; margin-top: 4px; font-size: 12px; line-height: 1.25; color: var(--cp-text-muted); }
-.tag { font-weight: 800; color: var(--cp-accent); }
-.note { border-left: 4px solid var(--cp-accent); background: var(--cp-accent-soft); padding: 14px 16px; border-radius: 0.625rem; color: var(--cp-text); }
-.rhythm { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
-.rhythm-item { border: 1px solid var(--cp-border); border-radius: 0.625rem; padding: 14px; background: var(--cp-surface-soft); }
-.rhythm-item strong { color: var(--cp-accent); display: block; margin-bottom: 6px; }
-@media (max-width: 900px) { .top-grid, .months, .rhythm { grid-template-columns: 1fr; } .page { padding: 16px; } .content, .header { padding-left: 20px; padding-right: 20px; } }
+* {
+  box-sizing: border-box;
+}
+body {
+  margin: 0;
+  background: var(--cp-bg);
+  color: var(--cp-text);
+  font-family: "Segoe UI", Aptos, Calibri, -apple-system, BlinkMacSystemFont, sans-serif;
+}
+button,
+input {
+  font: inherit;
+}
+.page {
+  min-height: 100vh;
+  padding: 32px;
+}
+.shell {
+  max-width: 1240px;
+  margin: 0 auto;
+  overflow: hidden;
+  background: var(--cp-surface);
+  border: 1px solid var(--cp-border);
+  border-radius: 16px;
+  box-shadow: 0 0 2px var(--cp-border), 0 1px 2px var(--cp-border);
+}
+.header {
+  padding: 28px 32px 22px;
+  background: var(--cp-panel-strong);
+  border-bottom: 1px solid var(--cp-border);
+}
+.eyebrow {
+  margin: 0 0 8px;
+  color: var(--cp-accent);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+h1,
+h2,
+h3,
+p {
+  margin-top: 0;
+}
+h1 {
+  margin-bottom: 12px;
+  font-size: clamp(30px, 4vw, 46px);
+  line-height: 1.05;
+}
+.subtitle {
+  max-width: 860px;
+  margin-bottom: 0;
+  color: var(--cp-text-muted);
+  font-size: 16px;
+}
+.content {
+  display: grid;
+  gap: 24px;
+  padding: 28px 32px 34px;
+}
+.card {
+  background: var(--cp-surface);
+  border: 1px solid var(--cp-border);
+  border-radius: 16px;
+  box-shadow: 0 0 2px var(--cp-border), 0 1px 2px var(--cp-border);
+  padding: 20px;
+}
+.config-grid {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 12px;
+}
+.field {
+  display: grid;
+  gap: 6px;
+}
+label {
+  color: var(--cp-text-muted);
+  font-size: 12px;
+  font-weight: 700;
+}
+input {
+  width: 100%;
+  min-height: 38px;
+  padding: 8px 10px;
+  color: var(--cp-text);
+  background: var(--cp-surface-soft);
+  border: 1px solid var(--cp-border);
+  border-radius: 0.625rem;
+}
+input:focus {
+  border-color: var(--cp-accent);
+  outline: 2px solid var(--cp-accent-soft);
+}
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: center;
+  margin-top: 16px;
+}
+button {
+  min-height: 38px;
+  padding: 8px 14px;
+  color: var(--cp-accent-fg);
+  background: var(--cp-accent);
+  border: 1px solid var(--cp-accent);
+  border-radius: 0.625rem;
+  cursor: pointer;
+  font-weight: 700;
+}
+button:hover {
+  background: var(--cp-accent-hover);
+}
+.button-secondary {
+  color: var(--cp-text);
+  background: var(--cp-surface);
+  border-color: var(--cp-border-strong);
+}
+.button-secondary:hover {
+  color: var(--cp-accent-fg);
+  background: var(--cp-accent-hover);
+}
+.hint {
+  margin: 0;
+  color: var(--cp-text-muted);
+  font-size: 13px;
+}
+.legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 16px;
+}
+.pill {
+  display: inline-flex;
+  gap: 6px;
+  align-items: center;
+  padding: 6px 10px;
+  color: var(--cp-text);
+  background: var(--cp-surface-soft);
+  border: 1px solid var(--cp-border);
+  border-radius: 0.625rem;
+  font-size: 12px;
+  font-weight: 700;
+}
+.pill::before {
+  width: 8px;
+  height: 8px;
+  content: "";
+  background: var(--cp-accent);
+  border-radius: 0.625rem;
+}
+.two-column {
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
+  gap: 24px;
+}
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+}
+th {
+  padding: 9px;
+  color: var(--cp-accent-fg);
+  text-align: left;
+  background: var(--cp-accent);
+  border: 1px solid var(--cp-border);
+}
+td {
+  padding: 9px;
+  vertical-align: top;
+  border: 1px solid var(--cp-border);
+}
+tbody tr:nth-child(even) {
+  background: var(--cp-surface-soft);
+}
+.months {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 20px;
+}
+.month-title {
+  margin-bottom: 12px;
+  color: var(--cp-link);
+}
+.calendar {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  border: 1px solid var(--cp-border);
+}
+.day-head {
+  padding: 8px 4px;
+  text-align: center;
+  background: var(--cp-surface-soft);
+  border: 1px solid var(--cp-border);
+  font-size: 11px;
+  font-weight: 800;
+}
+.day {
+  min-height: 104px;
+  padding: 8px;
+  background: var(--cp-surface);
+  border: 1px solid var(--cp-border);
+}
+.day.empty {
+  background: var(--cp-surface-soft);
+}
+.date {
+  margin-bottom: 6px;
+  font-weight: 800;
+}
+.event {
+  display: block;
+  margin-top: 4px;
+  color: var(--cp-text-muted);
+  font-size: 11px;
+  line-height: 1.25;
+}
+.tag {
+  color: var(--cp-accent);
+  font-weight: 800;
+}
+.note {
+  margin: 0;
+  padding: 14px 16px;
+  background: var(--cp-accent-soft);
+  border-left: 4px solid var(--cp-accent);
+  border-radius: 0.625rem;
+}
+.export-box {
+  width: 100%;
+  min-height: 180px;
+  padding: 12px;
+  color: var(--cp-text);
+  background: var(--cp-surface-soft);
+  border: 1px solid var(--cp-border);
+  border-radius: 0.625rem;
+  font-family: Consolas, "Courier New", Courier, monospace;
+  font-size: 12px;
+  white-space: pre-wrap;
+}
+@media (max-width: 1100px) {
+  .config-grid,
+  .months {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .two-column {
+    grid-template-columns: 1fr;
+  }
+}
+@media (max-width: 720px) {
+  .page {
+    padding: 16px;
+  }
+  .header,
+  .content {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+  .config-grid,
+  .months {
+    grid-template-columns: 1fr;
+  }
+  .calendar {
+    overflow-x: auto;
+  }
+}
   </style>
 </head>
 <body>
-  <main class="page"><section class="shell"><header class="header"><p class="eyebrow">Analytics ROB</p><h1>October-November 2026 Operating Rhythm</h1><p class="subtitle">Two-week sprint cadence with Wednesday request governance, every-other-Tuesday CX alignment, Thursday sprint planning, and Friday scoped delivery visibility.</p><div class="legend" aria-label="workstream legend"><span class="pill">CX alignment</span><span class="pill">Triage and approvals</span><span class="pill">Sprint planning</span><span class="pill">Scoped delivery</span><span class="pill">Sprint execution</span></div></header><div class="content"><section class="top-grid"><article class="card"><h2>Sprint schedule</h2><table><thead><tr><th>Sprint</th><th>Planning</th><th>Scope Communication</th><th>Execution window</th></tr></thead><tbody><tr><td>Sprint 1</td><td>Sep 24</td><td>Sep 25</td><td>Sep 28-Oct 9</td></tr><tr><td>Sprint 2</td><td>Oct 8</td><td>Oct 9</td><td>Oct 12-Oct 23</td></tr><tr><td>Sprint 3</td><td>Oct 22</td><td>Oct 23</td><td>Oct 26-Nov 6</td></tr><tr><td>Sprint 4</td><td>Nov 5</td><td>Nov 6</td><td>Nov 9-Nov 20</td></tr><tr><td>Sprint 5</td><td>Nov 19</td><td>Nov 20</td><td>Nov 23-Dec 4</td></tr></tbody></table></article><article class="card"><h2>Operating rhythm</h2><div class="rhythm"><div class="rhythm-item"><strong>Every Wednesday</strong>Triage, prioritize, and approve analytics requests.</div><div class="rhythm-item"><strong>Every other Tuesday</strong>Connect with Trishala from CX to compare notes.</div><div class="rhythm-item"><strong>Every other Thursday</strong>Run sprint planning for the next two-week cycle.</div><div class="rhythm-item"><strong>Every other Friday</strong>Share what is scoped for delivery.</div></div></article></section><section class="months"><article class="card month"><h2>October ROB</h2><div class="calendar"><div class="day-head">MON</div><div class="day-head">TUE</div><div class="day-head">WED</div><div class="day-head">THU</div><div class="day-head">FRI</div><div class="day"></div><div class="day"></div><div class="day"></div><div class="day"><div class="date">1</div></div><div class="day"><div class="date">2</div></div><div class="day"><div class="date">5</div></div><div class="day"><div class="date">6</div><span class="event"><span class="tag">CX</span> Trishala sync</span></div><div class="day"><div class="date">7</div><span class="event"><span class="tag">WED</span> Triage + approve</span></div><div class="day"><div class="date">8</div><span class="event"><span class="tag">PLAN</span> Sprint planning</span></div><div class="day"><div class="date">9</div><span class="event"><span class="tag">SCOPE</span> Delivery share</span><span class="event">Sprint 1 ends</span></div><div class="day"><div class="date">12</div><span class="event">Sprint 2 starts</span></div><div class="day"><div class="date">13</div></div><div class="day"><div class="date">14</div><span class="event"><span class="tag">WED</span> Triage + approve</span></div><div class="day"><div class="date">15</div></div><div class="day"><div class="date">16</div></div><div class="day"><div class="date">19</div></div><div class="day"><div class="date">20</div><span class="event"><span class="tag">CX</span> Trishala sync</span></div><div class="day"><div class="date">21</div><span class="event"><span class="tag">WED</span> Triage + approve</span></div><div class="day"><div class="date">22</div><span class="event"><span class="tag">PLAN</span> Sprint planning</span></div><div class="day"><div class="date">23</div><span class="event"><span class="tag">SCOPE</span> Delivery share</span><span class="event">Sprint 2 ends</span></div><div class="day"><div class="date">26</div><span class="event">Sprint 3 starts</span></div><div class="day"><div class="date">27</div></div><div class="day"><div class="date">28</div><span class="event"><span class="tag">WED</span> Triage + approve</span></div><div class="day"><div class="date">29</div></div><div class="day"><div class="date">30</div></div></div></article><article class="card month"><h2>November ROB</h2><div class="calendar"><div class="day-head">MON</div><div class="day-head">TUE</div><div class="day-head">WED</div><div class="day-head">THU</div><div class="day-head">FRI</div><div class="day"><div class="date">2</div></div><div class="day"><div class="date">3</div><span class="event"><span class="tag">CX</span> Trishala sync</span></div><div class="day"><div class="date">4</div><span class="event"><span class="tag">WED</span> Triage + approve</span></div><div class="day"><div class="date">5</div><span class="event"><span class="tag">PLAN</span> Sprint planning</span></div><div class="day"><div class="date">6</div><span class="event"><span class="tag">SCOPE</span> Delivery share</span><span class="event">Sprint 3 ends</span></div><div class="day"><div class="date">9</div><span class="event">Sprint 4 starts</span></div><div class="day"><div class="date">10</div></div><div class="day"><div class="date">11</div><span class="event"><span class="tag">WED</span> Triage + approve*</span></div><div class="day"><div class="date">12</div></div><div class="day"><div class="date">13</div></div><div class="day"><div class="date">16</div></div><div class="day"><div class="date">17</div><span class="event"><span class="tag">CX</span> Trishala sync</span></div><div class="day"><div class="date">18</div><span class="event"><span class="tag">WED</span> Triage + approve</span></div><div class="day"><div class="date">19</div><span class="event"><span class="tag">PLAN</span> Sprint planning</span></div><div class="day"><div class="date">20</div><span class="event"><span class="tag">SCOPE</span> Delivery share</span><span class="event">Sprint 4 ends</span></div><div class="day"><div class="date">23</div><span class="event">Sprint 5 starts</span></div><div class="day"><div class="date">24</div></div><div class="day"><div class="date">25</div><span class="event"><span class="tag">WED</span> Triage + approve*</span></div><div class="day"><div class="date">26</div></div><div class="day"><div class="date">27</div></div></div></article></section><p class="note">* Holiday proximity: confirm whether Nov 11 and Nov 25 governance sessions need adjustment. Assumption: CX alignment occurs on the Tuesday of sprint-planning week.</p></div></section></main>
+  <main class="page">
+    <section class="shell">
+      <header class="header">
+        <p class="eyebrow">Analytics ROB</p>
+        <h1>Next Month Schedule Generator</h1>
+        <p class="subtitle">The page automatically defaults to the next upcoming month and generates sprint planning, scope communication, sprint execution, Wednesday governance, and CX alignment dates.</p>
+        <div class="legend" aria-label="workstream legend">
+          <span class="pill">CX alignment</span>
+          <span class="pill">Triage and approvals</span>
+          <span class="pill">Sprint planning</span>
+          <span class="pill">Scope communication</span>
+          <span class="pill">Sprint execution</span>
+        </div>
+      </header>
+
+      <div class="content">
+        <section class="card" aria-labelledby="settingsTitle">
+          <h2 id="settingsTitle">Schedule settings</h2>
+          <div class="config-grid">
+            <div class="field">
+              <label for="quarterStart">Schedule start</label>
+              <input id="quarterStart" type="date" value="2026-10-01" />
+            </div>
+            <div class="field">
+              <label for="quarterEnd">Schedule end</label>
+              <input id="quarterEnd" type="date" value="2026-12-31" />
+            </div>
+            <div class="field">
+              <label for="firstSprintStart">First sprint start</label>
+              <input id="firstSprintStart" type="date" value="2026-09-28" />
+            </div>
+            <div class="field">
+              <label for="sprintLength">Sprint length days</label>
+              <input id="sprintLength" type="number" min="1" value="14" />
+            </div>
+            <div class="field">
+              <label for="quarterLabel">Schedule label</label>
+              <input id="quarterLabel" type="text" value="Next Month" />
+            </div>
+          </div>
+          <div class="actions">
+            <button id="generateButton" type="button">Generate schedule</button>
+            <button id="copyButton" type="button" class="button-secondary">Copy table HTML</button>
+            <p class="hint">On load, defaults are set to the next calendar month. Rules: planning is 4 days before sprint start, scope communication is 3 days before sprint start, and CX alignment is 6 days before sprint start.</p>
+          </div>
+        </section>
+
+        <section class="two-column">
+          <article class="card" aria-labelledby="sprintTitle">
+            <h2 id="sprintTitle">Sprint schedule</h2>
+            <div id="sprintSchedule"></div>
+          </article>
+
+          <article class="card" aria-labelledby="governanceTitle">
+            <h2 id="governanceTitle">Weekly governance</h2>
+            <div id="governanceSchedule"></div>
+          </article>
+        </section>
+
+        <section class="card" aria-labelledby="calendarTitle">
+          <h2 id="calendarTitle">Schedule calendar</h2>
+          <div id="quarterCalendar" class="months"></div>
+        </section>
+
+        <p class="note">Holiday note: review generated Wednesday sessions near holidays and adjust manually if needed.</p>
+
+        <section class="card" aria-labelledby="exportTitle">
+          <h2 id="exportTitle">Generated table HTML</h2>
+          <p class="hint">Use this if you want to copy just the generated sprint table into another page.</p>
+          <pre id="exportHtml" class="export-box"></pre>
+        </section>
+      </div>
+    </section>
+  </main>
+
+  <script>
+const DAY_MS = 24 * 60 * 60 * 1000;
+
+function parseLocalDate(value) {
+  const parts = value.split("-").map(Number);
+  return new Date(parts[0], parts[1] - 1, parts[2]);
+}
+
+function toDateInputValue(date) {
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, "0");
+  const day = String(date.getDate()).padStart(2, "0");
+  return `${year}-${month}-${day}`;
+}
+
+function addDays(date, days) {
+  const result = new Date(date);
+  result.setDate(result.getDate() + days);
+  return result;
+}
+
+function startOfMonth(date) {
+  return new Date(date.getFullYear(), date.getMonth(), 1);
+}
+
+function endOfMonth(date) {
+  return new Date(date.getFullYear(), date.getMonth() + 1, 0);
+}
+
+function formatMonthLabel(date) {
+  return date.toLocaleDateString("en-US", { month: "long", year: "numeric" });
+}
+
+function findSprintStartForWindow(windowStart, anchorSprintStart, sprintLengthDays) {
+  let sprintStart = new Date(anchorSprintStart);
+  while (addDays(sprintStart, sprintLengthDays - 1) < windowStart) {
+    sprintStart = addDays(sprintStart, sprintLengthDays);
+  }
+  return sprintStart;
+}
+
+function initializeNextMonthDefaults() {
+  const today = new Date();
+  const nextMonthStart = new Date(today.getFullYear(), today.getMonth() + 1, 1);
+  const nextMonthEnd = endOfMonth(nextMonthStart);
+  const sprintLengthDays = Number(document.getElementById("sprintLength").value) || 14;
+  const anchorSprintStart = parseLocalDate("2026-09-28");
+  const firstSprintStart = findSprintStartForWindow(nextMonthStart, anchorSprintStart, sprintLengthDays);
+
+  document.getElementById("quarterStart").value = toDateInputValue(nextMonthStart);
+  document.getElementById("quarterEnd").value = toDateInputValue(nextMonthEnd);
+  document.getElementById("firstSprintStart").value = toDateInputValue(firstSprintStart);
+  document.getElementById("quarterLabel").value = `${formatMonthLabel(nextMonthStart)} Analytics ROB`;
+}
+
+function formatDate(date) {
+  return date.toLocaleDateString("en-US", { month: "short", day: "numeric" });
+}
+
+function formatRange(start, end) {
+  const sameMonth = start.getMonth() === end.getMonth() && start.getFullYear() === end.getFullYear();
+  if (sameMonth) {
+    return `${start.toLocaleDateString("en-US", { month: "short" })} ${start.getDate()}-${end.getDate()}`;
+  }
+  return `${formatDate(start)}-${formatDate(end)}`;
+}
+
+function escapeHtml(value) {
+  return String(value)
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#039;");
+}
+
+function getConfig() {
+  return {
+    quarterStart: parseLocalDate(document.getElementById("quarterStart").value),
+    quarterEnd: parseLocalDate(document.getElementById("quarterEnd").value),
+    firstSprintStart: parseLocalDate(document.getElementById("firstSprintStart").value),
+    sprintLengthDays: Number(document.getElementById("sprintLength").value),
+    quarterLabel: document.getElementById("quarterLabel").value.trim() || "Quarter"
+  };
+}
+
+function generateSprints(config) {
+  const sprints = [];
+  let sprintStart = new Date(config.firstSprintStart);
+  let sprintNumber = 1;
+
+  while (sprintStart <= config.quarterEnd) {
+    const sprintEnd = addDays(sprintStart, config.sprintLengthDays - 1);
+    if (sprintEnd >= config.quarterStart) {
+      sprints.push({
+        name: `Sprint ${sprintNumber}`,
+        planning: addDays(sprintStart, -4),
+        scope: addDays(sprintStart, -3),
+        cx: addDays(sprintStart, -6),
+        start: new Date(sprintStart),
+        end: sprintEnd
+      });
+    }
+    sprintStart = addDays(sprintStart, config.sprintLengthDays);
+    sprintNumber += 1;
+  }
+  return sprints;
+}
+
+function generateWednesdays(config) {
+  const dates = [];
+  let date = new Date(config.quarterStart);
+  while (date.getDay() !== 3) {
+    date = addDays(date, 1);
+  }
+  while (date <= config.quarterEnd) {
+    dates.push(new Date(date));
+    date = addDays(date, 7);
+  }
+  return dates;
+}
+
+function getMonths(config) {
+  const months = [];
+  let cursor = startOfMonth(config.quarterStart);
+  const finalMonth = startOfMonth(config.quarterEnd);
+  while (cursor <= finalMonth) {
+    months.push(new Date(cursor));
+    cursor = new Date(cursor.getFullYear(), cursor.getMonth() + 1, 1);
+  }
+  return months;
+}
+
+function buildSprintTable(sprints) {
+  const rows = sprints.map((sprint) => `
+        <tr>
+          <td>${escapeHtml(sprint.name)}</td>
+          <td>${escapeHtml(formatDate(sprint.planning))}</td>
+          <td>${escapeHtml(formatDate(sprint.scope))}</td>
+          <td>${escapeHtml(formatRange(sprint.start, sprint.end))}</td>
+        </tr>`).join("");
+
+  return `<table>
+      <thead>
+        <tr>
+          <th>Sprint</th>
+          <th>Planning</th>
+          <th>Scope Communication</th>
+          <th>Execution window</th>
+        </tr>
+      </thead>
+      <tbody>${rows}
+      </tbody>
+    </table>`;
+}
+
+function buildGovernanceTable(wednesdays, sprints) {
+  const cxRows = sprints.map((sprint) => `
+        <tr>
+          <td>CX alignment</td>
+          <td>${escapeHtml(formatDate(sprint.cx))}</td>
+          <td>Connect with Trishala from CX before sprint planning.</td>
+        </tr>`).join("");
+  const wedRows = wednesdays.map((date) => `
+        <tr>
+          <td>Request governance</td>
+          <td>${escapeHtml(formatDate(date))}</td>
+          <td>Triage, prioritize, and approve analytics requests.</td>
+        </tr>`).join("");
+
+  return `<table>
+      <thead>
+        <tr>
+          <th>Forum</th>
+          <th>Date</th>
+          <th>Purpose</th>
+        </tr>
+      </thead>
+      <tbody>${cxRows}${wedRows}
+      </tbody>
+    </table>`;
+}
+
+function addEvent(eventsByDate, date, tag, text) {
+  const key = toDateInputValue(date);
+  if (!eventsByDate.has(key)) {
+    eventsByDate.set(key, []);
+  }
+  eventsByDate.get(key).push({ tag, text });
+}
+
+function buildEventsByDate(sprints, wednesdays) {
+  const events = new Map();
+  for (const sprint of sprints) {
+    addEvent(events, sprint.cx, "CX", "Trishala sync");
+    addEvent(events, sprint.planning, "PLAN", "Sprint planning");
+    addEvent(events, sprint.scope, "SCOPE", "Scope communication");
+    addEvent(events, sprint.start, "START", `${sprint.name} starts`);
+    addEvent(events, sprint.end, "END", `${sprint.name} ends`);
+  }
+  for (const date of wednesdays) {
+    addEvent(events, date, "WED", "Triage + approve");
+  }
+  return events;
+}
+
+function buildMonthCalendar(monthStart, eventsByDate) {
+  const monthEnd = endOfMonth(monthStart);
+  const days = ["MON", "TUE", "WED", "THU", "FRI"];
+  let html = `<article class="card month"><h3 class="month-title">${escapeHtml(monthStart.toLocaleDateString("en-US", { month: "long", year: "numeric" }))}</h3><div class="calendar">`;
+  html += days.map((day) => `<div class="day-head">${day}</div>`).join("");
+
+  const firstWeekday = monthStart.getDay();
+  const blanks = firstWeekday === 0 ? 0 : Math.max(firstWeekday - 1, 0);
+  for (let i = 0; i < blanks; i += 1) {
+    html += `<div class="day empty"></div>`;
+  }
+
+  for (let day = 1; day <= monthEnd.getDate(); day += 1) {
+    const date = new Date(monthStart.getFullYear(), monthStart.getMonth(), day);
+    if (date.getDay() === 0 || date.getDay() === 6) {
+      continue;
+    }
+    const eventList = eventsByDate.get(toDateInputValue(date)) || [];
+    const eventsHtml = eventList.map((event) => `<span class="event"><span class="tag">${escapeHtml(event.tag)}</span> ${escapeHtml(event.text)}</span>`).join("");
+    html += `<div class="day"><div class="date">${day}</div>${eventsHtml}</div>`;
+  }
+  html += `</div></article>`;
+  return html;
+}
+
+function render() {
+  const config = getConfig();
+  const sprints = generateSprints(config);
+  const wednesdays = generateWednesdays(config);
+  const eventsByDate = buildEventsByDate(sprints, wednesdays);
+  const sprintTable = buildSprintTable(sprints);
+
+  document.querySelector("h1").textContent = `${config.quarterLabel} Analytics ROB Schedule`;
+  document.getElementById("sprintSchedule").innerHTML = sprintTable;
+  document.getElementById("governanceSchedule").innerHTML = buildGovernanceTable(wednesdays, sprints);
+  document.getElementById("quarterCalendar").innerHTML = getMonths(config)
+    .map((monthStart) => buildMonthCalendar(monthStart, eventsByDate))
+    .join("");
+  document.getElementById("exportHtml").textContent = sprintTable;
+}
+
+function copyTableHtml() {
+  const text = document.getElementById("exportHtml").textContent;
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(text);
+  }
+}
+
+document.getElementById("generateButton").addEventListener("click", render);
+document.getElementById("copyButton").addEventListener("click", copyTableHtml);
+initializeNextMonthDefaults();
+render();
+  </script>
 </body>
 </html>
