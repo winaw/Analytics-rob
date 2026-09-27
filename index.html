@@ -674,4 +674,16 @@ function render() {
 }
 
 function copyTableHtml() {
-  const text = document.getElementById
+  const text = document.getElementById("exportHtml").textContent;
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(text);
+  }
+}
+
+document.getElementById("generateButton").addEventListener("click", render);
+document.getElementById("copyButton").addEventListener("click", copyTableHtml);
+initializeNextMonthDefaults();
+render();
+  </script>
+</body>
+</html>
