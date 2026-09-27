@@ -272,7 +272,7 @@ tbody tr:nth-child(even) {
   background: var(--cp-surface);
   border: 1px solid var(--cp-border);
 }
-.day.triage-highlight {
+.day.planning-highlight {
   background: var(--cp-accent-soft);
   border: 2px solid var(--cp-accent);
 }
@@ -294,11 +294,11 @@ tbody tr:nth-child(even) {
   color: var(--cp-accent);
   font-weight: 800;
 }
-.triage-highlight .date,
-.triage-highlight .tag {
+.planning-highlight .date,
+.planning-highlight .tag {
   color: var(--cp-accent);
 }
-.triage-highlight .event {
+.planning-highlight .event {
   color: var(--cp-text);
   font-weight: 700;
 }
@@ -453,17 +453,20 @@ function escapeHtml(value) {
 function getConfig() {
   const today = new Date();
   const scheduleStart = new Date(today.getFullYear(), today.getMonth() + 1, 1);
-  const scheduleEnd = endOfMonth(scheduleStart);
+  const followingMonthStart = new Date(scheduleStart.getFullYear(), scheduleStart.getMonth() + 1, 1);
+  const scheduleEnd = endOfMonth(followingMonthStart);
   const sprintLengthDays = 14;
   const anchorSprintStart = parseLocalDate("2026-09-28");
   const firstSprintStart = findSprintStartForWindow(scheduleStart, anchorSprintStart, sprintLengthDays);
+  const labelStart = scheduleStart.toLocaleDateString("en-US", { month: "long" });
+  const labelEnd = formatMonthLabel(followingMonthStart);
 
   return {
     quarterStart: scheduleStart,
     quarterEnd: scheduleEnd,
     firstSprintStart,
     sprintLengthDays,
-    quarterLabel: `${formatMonthLabel(scheduleStart)} Analytics ROB`
+    quarterLabel: `${labelStart}-${labelEnd} Analytics ROB`
   };
 }
 
@@ -605,7 +608,7 @@ function buildMonthCalendar(monthStart, eventsByDate) {
       continue;
     }
     const eventList = eventsByDate.get(toDateInputValue(date)) || [];
-    const dayClass = eventList.some((event) => event.tag === "WED") ? "day triage-highlight" : "day";
+    const dayClass = eventList.some((event) => event.tag === "PLAN") ? "day planning-highlight" : "day";
     const eventsHtml = eventList.map((event) => `<span class="event"><span class="tag">${escapeHtml(event.tag)}</span> ${escapeHtml(event.text)}</span>`).join("");
     html += `<div class="${dayClass}"><div class="date">${day}</div>${eventsHtml}</div>`;
   }
