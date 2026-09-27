@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Analytics ROB Next Month Schedule Generator</title>
+  <title>Analytics ROB Schedule</title>
   <script>
     (() => {
       const param = new URLSearchParams(window.location.search).get("scoutTheme");
@@ -354,8 +354,8 @@ tbody tr:nth-child(even) {
     <section class="shell">
       <header class="header">
         <p class="eyebrow">Analytics ROB</p>
-        <h1>Next Month Schedule Generator</h1>
-        <p class="subtitle">The page automatically defaults to the next upcoming month and generates sprint planning, scope communication, sprint execution, Wednesday governance, and CX alignment dates.</p>
+        <h1>Analytics ROB Schedule</h1>
+        <p class="subtitle">This page automatically shows the next upcoming month with sprint planning, scope communication, sprint execution, Wednesday governance, and CX alignment dates.</p>
         <div class="legend" aria-label="workstream legend">
           <span class="pill">CX alignment</span>
           <span class="pill">Triage and approvals</span>
@@ -366,37 +366,6 @@ tbody tr:nth-child(even) {
       </header>
 
       <div class="content">
-        <section class="card" aria-labelledby="settingsTitle">
-          <h2 id="settingsTitle">Schedule settings</h2>
-          <div class="config-grid">
-            <div class="field">
-              <label for="quarterStart">Schedule start</label>
-              <input id="quarterStart" type="date" value="2026-10-01" />
-            </div>
-            <div class="field">
-              <label for="quarterEnd">Schedule end</label>
-              <input id="quarterEnd" type="date" value="2026-12-31" />
-            </div>
-            <div class="field">
-              <label for="firstSprintStart">First sprint start</label>
-              <input id="firstSprintStart" type="date" value="2026-09-28" />
-            </div>
-            <div class="field">
-              <label for="sprintLength">Sprint length days</label>
-              <input id="sprintLength" type="number" min="1" value="14" />
-            </div>
-            <div class="field">
-              <label for="quarterLabel">Schedule label</label>
-              <input id="quarterLabel" type="text" value="Next Month" />
-            </div>
-          </div>
-          <div class="actions">
-            <button id="generateButton" type="button">Generate schedule</button>
-            <button id="copyButton" type="button" class="button-secondary">Copy table HTML</button>
-            <p class="hint">On load, defaults are set to the next calendar month. Rules: planning is 4 days before sprint start, scope communication is 3 days before sprint start, and CX alignment is 6 days before sprint start.</p>
-          </div>
-        </section>
-
         <section class="two-column">
           <article class="card" aria-labelledby="sprintTitle">
             <h2 id="sprintTitle">Sprint schedule</h2>
@@ -415,12 +384,6 @@ tbody tr:nth-child(even) {
         </section>
 
         <p class="note">Holiday note: review generated Wednesday sessions near holidays and adjust manually if needed.</p>
-
-        <section class="card" aria-labelledby="exportTitle">
-          <h2 id="exportTitle">Generated table HTML</h2>
-          <p class="hint">Use this if you want to copy just the generated sprint table into another page.</p>
-          <pre id="exportHtml" class="export-box"></pre>
-        </section>
       </div>
     </section>
   </main>
@@ -466,20 +429,6 @@ function findSprintStartForWindow(windowStart, anchorSprintStart, sprintLengthDa
   return sprintStart;
 }
 
-function initializeNextMonthDefaults() {
-  const today = new Date();
-  const nextMonthStart = new Date(today.getFullYear(), today.getMonth() + 1, 1);
-  const nextMonthEnd = endOfMonth(nextMonthStart);
-  const sprintLengthDays = Number(document.getElementById("sprintLength").value) || 14;
-  const anchorSprintStart = parseLocalDate("2026-09-28");
-  const firstSprintStart = findSprintStartForWindow(nextMonthStart, anchorSprintStart, sprintLengthDays);
-
-  document.getElementById("quarterStart").value = toDateInputValue(nextMonthStart);
-  document.getElementById("quarterEnd").value = toDateInputValue(nextMonthEnd);
-  document.getElementById("firstSprintStart").value = toDateInputValue(firstSprintStart);
-  document.getElementById("quarterLabel").value = `${formatMonthLabel(nextMonthStart)} Analytics ROB`;
-}
-
 function formatDate(date) {
   return date.toLocaleDateString("en-US", { month: "short", day: "numeric" });
 }
@@ -502,12 +451,19 @@ function escapeHtml(value) {
 }
 
 function getConfig() {
+  const today = new Date();
+  const scheduleStart = new Date(today.getFullYear(), today.getMonth() + 1, 1);
+  const scheduleEnd = endOfMonth(scheduleStart);
+  const sprintLengthDays = 14;
+  const anchorSprintStart = parseLocalDate("2026-09-28");
+  const firstSprintStart = findSprintStartForWindow(scheduleStart, anchorSprintStart, sprintLengthDays);
+
   return {
-    quarterStart: parseLocalDate(document.getElementById("quarterStart").value),
-    quarterEnd: parseLocalDate(document.getElementById("quarterEnd").value),
-    firstSprintStart: parseLocalDate(document.getElementById("firstSprintStart").value),
-    sprintLengthDays: Number(document.getElementById("sprintLength").value),
-    quarterLabel: document.getElementById("quarterLabel").value.trim() || "Quarter"
+    quarterStart: scheduleStart,
+    quarterEnd: scheduleEnd,
+    firstSprintStart,
+    sprintLengthDays,
+    quarterLabel: `${formatMonthLabel(scheduleStart)} Analytics ROB`
   };
 }
 
@@ -670,19 +626,8 @@ function render() {
   document.getElementById("quarterCalendar").innerHTML = getMonths(config)
     .map((monthStart) => buildMonthCalendar(monthStart, eventsByDate))
     .join("");
-  document.getElementById("exportHtml").textContent = sprintTable;
 }
 
-function copyTableHtml() {
-  const text = document.getElementById("exportHtml").textContent;
-  if (navigator.clipboard && navigator.clipboard.writeText) {
-    navigator.clipboard.writeText(text);
-  }
-}
-
-document.getElementById("generateButton").addEventListener("click", render);
-document.getElementById("copyButton").addEventListener("click", copyTableHtml);
-initializeNextMonthDefaults();
 render();
   </script>
 </body>
