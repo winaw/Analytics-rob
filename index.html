@@ -219,11 +219,6 @@ button:hover {
   background: var(--cp-accent);
   border-radius: 0.625rem;
 }
-.two-column {
-  display: grid;
-  grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
-  gap: 24px;
-}
 table {
   width: 100%;
   border-collapse: collapse;
@@ -326,9 +321,6 @@ tbody tr:nth-child(even) {
   .months {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
-  .two-column {
-    grid-template-columns: 1fr;
-  }
 }
 @media (max-width: 720px) {
   .page {
@@ -366,16 +358,9 @@ tbody tr:nth-child(even) {
       </header>
 
       <div class="content">
-        <section class="two-column">
-          <article class="card" aria-labelledby="sprintTitle">
-            <h2 id="sprintTitle">Sprint schedule</h2>
-            <div id="sprintSchedule"></div>
-          </article>
-
-          <article class="card" aria-labelledby="governanceTitle">
-            <h2 id="governanceTitle">Weekly governance</h2>
-            <div id="governanceSchedule"></div>
-          </article>
+        <section class="card" aria-labelledby="sprintTitle">
+          <h2 id="sprintTitle">Sprint schedule</h2>
+          <div id="sprintSchedule"></div>
         </section>
 
         <section class="card" aria-labelledby="calendarTitle">
@@ -454,12 +439,13 @@ function getConfig() {
   const today = new Date();
   const scheduleStart = new Date(today.getFullYear(), today.getMonth() + 1, 1);
   const followingMonthStart = new Date(scheduleStart.getFullYear(), scheduleStart.getMonth() + 1, 1);
-  const scheduleEnd = endOfMonth(followingMonthStart);
+  const thirdMonthStart = new Date(scheduleStart.getFullYear(), scheduleStart.getMonth() + 2, 1);
+  const scheduleEnd = endOfMonth(thirdMonthStart);
   const sprintLengthDays = 14;
   const anchorSprintStart = parseLocalDate("2026-09-28");
   const firstSprintStart = findSprintStartForWindow(scheduleStart, anchorSprintStart, sprintLengthDays);
   const labelStart = scheduleStart.toLocaleDateString("en-US", { month: "long" });
-  const labelEnd = formatMonthLabel(followingMonthStart);
+  const labelEnd = formatMonthLabel(thirdMonthStart);
 
   return {
     quarterStart: scheduleStart,
@@ -540,33 +526,6 @@ function buildSprintTable(sprints) {
     </table>`;
 }
 
-function buildGovernanceTable(wednesdays, sprints) {
-  const cxRows = sprints.map((sprint) => `
-        <tr>
-          <td>CX alignment</td>
-          <td>${escapeHtml(formatDate(sprint.cx))}</td>
-          <td>Connect with Trishala from CX before sprint planning.</td>
-        </tr>`).join("");
-  const wedRows = wednesdays.map((date) => `
-        <tr>
-          <td>Request governance</td>
-          <td>${escapeHtml(formatDate(date))}</td>
-          <td>Triage, prioritize, and approve analytics requests.</td>
-        </tr>`).join("");
-
-  return `<table>
-      <thead>
-        <tr>
-          <th>Forum</th>
-          <th>Date</th>
-          <th>Purpose</th>
-        </tr>
-      </thead>
-      <tbody>${cxRows}${wedRows}
-      </tbody>
-    </table>`;
-}
-
 function addEvent(eventsByDate, date, tag, text) {
   const key = toDateInputValue(date);
   if (!eventsByDate.has(key)) {
@@ -625,7 +584,6 @@ function render() {
 
   document.querySelector("h1").textContent = `${config.quarterLabel} Analytics ROB Schedule`;
   document.getElementById("sprintSchedule").innerHTML = sprintTable;
-  document.getElementById("governanceSchedule").innerHTML = buildGovernanceTable(wednesdays, sprints);
   document.getElementById("quarterCalendar").innerHTML = getMonths(config)
     .map((monthStart) => buildMonthCalendar(monthStart, eventsByDate))
     .join("");
