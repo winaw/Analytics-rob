@@ -272,6 +272,10 @@ tbody tr:nth-child(even) {
   background: var(--cp-surface);
   border: 1px solid var(--cp-border);
 }
+.day.triage-highlight {
+  background: var(--cp-accent-soft);
+  border: 2px solid var(--cp-accent);
+}
 .day.empty {
   background: var(--cp-surface-soft);
 }
@@ -289,6 +293,14 @@ tbody tr:nth-child(even) {
 .tag {
   color: var(--cp-accent);
   font-weight: 800;
+}
+.triage-highlight .date,
+.triage-highlight .tag {
+  color: var(--cp-accent);
+}
+.triage-highlight .event {
+  color: var(--cp-text);
+  font-weight: 700;
 }
 .note {
   margin: 0;
@@ -574,13 +586,13 @@ function buildGovernanceTable(wednesdays, sprints) {
         <tr>
           <td>CX alignment</td>
           <td>${escapeHtml(formatDate(sprint.cx))}</td>
-          <td>P&I Connect with Trishala from CX before sprint planning.</td>
+          <td>Connect with Trishala from CX before sprint planning.</td>
         </tr>`).join("");
   const wedRows = wednesdays.map((date) => `
         <tr>
           <td>Request governance</td>
           <td>${escapeHtml(formatDate(date))}</td>
-          <td>P&I Triage, prioritize, and approve analytics requests.</td>
+          <td>Triage, prioritize, and approve analytics requests.</td>
         </tr>`).join("");
 
   return `<table>
@@ -637,8 +649,9 @@ function buildMonthCalendar(monthStart, eventsByDate) {
       continue;
     }
     const eventList = eventsByDate.get(toDateInputValue(date)) || [];
+    const dayClass = eventList.some((event) => event.tag === "WED") ? "day triage-highlight" : "day";
     const eventsHtml = eventList.map((event) => `<span class="event"><span class="tag">${escapeHtml(event.tag)}</span> ${escapeHtml(event.text)}</span>`).join("");
-    html += `<div class="day"><div class="date">${day}</div>${eventsHtml}</div>`;
+    html += `<div class="${dayClass}"><div class="date">${day}</div>${eventsHtml}</div>`;
   }
   html += `</div></article>`;
   return html;
@@ -661,16 +674,4 @@ function render() {
 }
 
 function copyTableHtml() {
-  const text = document.getElementById("exportHtml").textContent;
-  if (navigator.clipboard && navigator.clipboard.writeText) {
-    navigator.clipboard.writeText(text);
-  }
-}
-
-document.getElementById("generateButton").addEventListener("click", render);
-document.getElementById("copyButton").addEventListener("click", copyTableHtml);
-initializeNextMonthDefaults();
-render();
-  </script>
-</body>
-</html>
+  const text = document.getElementById
